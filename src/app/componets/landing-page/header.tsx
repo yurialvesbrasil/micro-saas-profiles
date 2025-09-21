@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Button from "../ui/button";
 
+
 export default function Header() {
     return (
         <div className="absolute top-0 left-0 right-0 max-w-7xl mx-auto flex items-center justify-between py-10">

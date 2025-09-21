@@ -17,7 +17,7 @@ export default async function ProfilePage({
         <main className="relative h-full flex p-20 overflow-hidden mt-12 ">
             <div className="fixed top-0 left-0 w-full flex justify-center items-center gap-1 py-2 bg-background-tertiary">
                 <span>Você está usando a versão trial.</span>
-                <Link className="text-accent-green font-bold" href={"/upgrade"}>
+                <Link className="text-accent-green font-bold" href={`/${profileId}/upgrade`}>
                     Faça o upgrade agora!
                 </Link>
             </div>

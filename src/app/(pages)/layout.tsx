@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
 import "./globals.css";
 
 import {Red_Hat_Display} from "next/font/google";
+import Header from "../componets/landing-page/header";
 
 const redHatDisplay = Red_Hat_Display({
   subsets: ["latin"],
@@ -19,6 +19,7 @@ export default function RootLayout({
       <body className={`${
         redHatDisplay.variable
       } bg-background-primary text-content-body antialiased`}>
+        <Header/>
         {children}
       </body>
     </html>

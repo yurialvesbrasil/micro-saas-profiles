@@ -1,25 +1,52 @@
-import NextAuth from "next-auth"
-import { FirestoreAdapter } from "@auth/firebase-adapter"
-import { cert } from "firebase-admin/app"
- import Google from "next-auth/providers/google";
+import NextAuth, { type DefaultSession } from "next-auth";
+import { db, firebaseCert } from "./firebase";
+import Google from "next-auth/providers/google";
+import { FirestoreAdapter } from "@auth/firebase-adapter";
+import { Timestamp } from "firebase-admin/firestore";
+import { TRIAL_DAYS } from "./config";
 
-const privateKey = process.env.FIREBASE_PRIVATE_KEY
-  ? Buffer.from(process.env.FIREBASE_PRIVATE_KEY, "base64").toString("utf-8")
-  : undefined;
+declare module "next-auth" {
+  interface Session {
+    user: {
+      createdAt: number;
+      isTrial: boolean;
+    } & DefaultSession["user"];
+  }
 
-if (!privateKey) {
-  throw new Error("FIREBASE_PRIVATE_KEY não definida ou inválida.");
+  interface User {
+    createdAt: number;
+    isTrial?: boolean;
+    isSubscribed?: boolean;
+  }
 }
 
-const firebaseConfig = {
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-  privateKey: privateKey,
-};
-
-export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [Google],
+export const { auth, handlers, signIn, signOut } = NextAuth({
   adapter: FirestoreAdapter({
-    credential: cert(firebaseConfig),
+    credential: firebaseCert,
   }),
-})
+  providers: [Google],
+  trustHost: true,
+  secret: process.env.AUTH_SECRET,
+  events: {
+    createUser: async ({ user }) => {
+      if (!user.id) return;
+
+      await db.collection("users").doc(user.id).update({
+        createdAt: Timestamp.now().toMillis(),
+      });
+    },
+  },
+  callbacks: {
+    session({ session, user }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          isTrial:
+            new Date(user.createdAt).getTime() >
+              new Date().getTime() - 1000 * 60 * 60 * 24 * TRIAL_DAYS || false,
+        },
+      };
+    },
+  },
+});

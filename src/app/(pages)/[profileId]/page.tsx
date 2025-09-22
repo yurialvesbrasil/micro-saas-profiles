@@ -5,10 +5,11 @@ import Button from "@/app/componets/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
+
 export default async function ProfilePage({
     params,
 }: {
-    params: { profileId: string };
+    params: Promise<{ profileId: string }>;
 }) {
     
     const { profileId } = await params;

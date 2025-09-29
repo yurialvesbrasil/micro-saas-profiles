@@ -15,7 +15,7 @@ export default function Button({
         "p-3 text-white rounded-xl font-bold whitespace-nowrap hover:opacity-95 disabled:opacity-70",
         variant === "primary" && "bg-accent-purple",
         variant === "secondary" && "bg-background-tertiary",
-        variant === "ghost" && "border-border-primary",
+        variant === "ghost" && "bg-transparent border-border-primary hover:outline-accent-purple hover:outline",
         props.className
       )}
     >

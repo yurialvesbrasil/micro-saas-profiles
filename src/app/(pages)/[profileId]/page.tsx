@@ -1,6 +1,6 @@
 import ProjectCard from "@/app/componets/commons/project-card";
 import TotalVisits from "@/app/componets/commons/total-visits";
-import UserCard from "@/app/componets/commons/user-card";
+import UserCard from "@/app/componets/commons/user-card/user-card";
 import Link from "next/link";
 import NewProject from "./new-project";
 import { getProfileData, getProfileProjects } from "@/app/server/get-profile-data";
@@ -49,7 +49,7 @@ export default async function ProfilePage({
                         key={project.id}
                         project={project}
                         isOwner={isOwner}
-                        img={await getDownloadURLFromPath(project.imagePath) ?? ""}
+                        img={await getDownloadURLFromPath(project.imagePath) || "./project1.jpg"}
                     />
                
                 ))}

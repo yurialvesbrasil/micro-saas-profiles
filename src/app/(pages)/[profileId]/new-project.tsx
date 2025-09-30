@@ -86,7 +86,7 @@ export default function NewProject({ profileId }: { profileId: string }) {
             <div className="flex flex-col items-center gap-3 text-xs">
               <div className="w-[100px] h-[100px] rounded-xl bg-background-tertiary overflow-hidden">
                 {projectImage ? (
-                  <img
+                  <Image
                     src={projectImage}
                     alt='Project logo do projeto'
                     className="object-cover object-center"

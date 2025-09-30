@@ -44,14 +44,17 @@ export default async function ProfilePage({
             </div>
             <div className="w-full flex justify-center content-start gap-4 flex-wrap overflow-y-auto">
                 {projects.map(async (project) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-            isOwner={isOwner}
-            img={await getDownloadURLFromPath(project.imagePath) ?? ""}
-          />
-        ))}
-                 {isOwner && <NewProject profileId={profileId} />}
+
+                    <ProjectCard
+                        key={project.id}
+                        project={project}
+                        isOwner={isOwner}
+                        img={await getDownloadURLFromPath(project.imagePath) ?? ""}
+                    />
+               
+                ))}
+
+                {isOwner && <NewProject profileId={profileId} />}
             </div>
             <div className="absolute bottom-4 right-0 left-0 w-min mx-auto">
                 <TotalVisits />

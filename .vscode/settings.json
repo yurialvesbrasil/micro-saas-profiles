@@ -1,3 +1,14 @@
 {
-  "svn.ignoreMissingSvnWarning": true
+  "[javascript]": {
+  "editor.defaultFormatter": "biomejs.biome-vscode"
+},
+"[typescript]": {
+  "editor.defaultFormatter": "biomejs.biome-vscode"
+},
+"editor.formatOnSave": true,
+"editor.codeActionsOnSave": {
+  "source.fixAll": "never",
+  "source.fixAll.eslint": "never",
+  "source.organizeImports": "never"
+}
 }

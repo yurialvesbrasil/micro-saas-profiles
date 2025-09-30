@@ -15,6 +15,11 @@ export function sanitizeLink(link?: string) {
     .toLocaleLowerCase());
 }
 
+export function formatUrl(url: string) {
+  const formattedUrl = url.startsWith("http") ? url : `https://${url}`;
+  return formattedUrl;
+}
+
 export async function compressFiles(files: File[]) {
   const compressPromisses = files.map(async (file) => {
     try {
